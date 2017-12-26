@@ -24,21 +24,6 @@ var geocodeAddress = (address, callback) => {
     });
 };
 
-var temperature = () => {
-    request({
-        url : 'https://api.darksky.net/forecast/0b74a898293475de2d0d3e47b6dc8951/37.8267,-122.4233?units=si',
-        json : true
-    }, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-            console.log(`Temperature: ${body.currently.temperature} degrees celcius.`);
-        } else {
-            console.log('Unable to connect to Dark Sky Servers.');
-        }
-        
-    })
-}
-
 module.exports = {
     geocodeAddress,
-    temperature
-}
+};
