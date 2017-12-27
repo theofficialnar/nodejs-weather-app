@@ -1,4 +1,5 @@
 const request = require('request');
+const fs = require('fs');
 
 var geocodeAddress = (address, callback) => {
     var encodedAddress = encodeURIComponent(address);
@@ -24,6 +25,28 @@ var geocodeAddress = (address, callback) => {
     });
 };
 
+var defaultAddress = (address) => {
+    var defAdd = {
+        address
+    };
+    fs.writeFileSync('default_location.json', JSON.stringify(defAdd));
+    return defAdd;
+};
+
+var fetchDefault = () => {
+    return new Promise((resolve, reject) => {
+        try {
+            var result = fs.readFileSync('default_location.json');
+            var parsedResult = JSON.parse(result);
+            resolve(parsedResult);
+        } catch (e) {
+            reject('No default address set.');
+        }
+    })
+};
+
 module.exports = {
     geocodeAddress,
+    defaultAddress,
+    fetchDefault
 };
